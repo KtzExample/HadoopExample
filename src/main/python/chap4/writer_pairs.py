@@ -12,10 +12,10 @@ if __name__ == '__main__':
     avro_file = sys.argv[1]
     writer = open(avro_file, 'wb')
     datum_writer = io.DatumWriter()
-    schema_object = schema.parse("""\
-    {"type": "record".
-    "name": "StringPair"
-    "doc": "A pair of strings.".
+    schema_object = schema.Parse("""
+    {"type": "record",
+    "name": "StringPair",
+    "doc": "A pair of strings.",
     "fields": [
     {"name": "left", "type": "string"},
     {"name": "right", "type": "string"}
@@ -23,6 +23,6 @@ if __name__ == '__main__':
     }""")
     dfw = datafile.DataFileWriter(writer, datum_writer, schema_object)
     for line in sys.stdin.readlines():
-        (left, right) = string.split(line.strip(), ',')
+        (left, right) = line.strip().split(',')
         dfw.append({'left': left, 'right': right});
     dfw.close()
